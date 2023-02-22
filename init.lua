@@ -109,7 +109,7 @@ minetest.register_on_dieplayer(function(player, reason)
                 send_death_message(burn, player)
 
             else
-                -- Reason not detect, send general death message
+                -- Reason not detected, send general death message
                 send_death_message(other, player)
             end
         else
