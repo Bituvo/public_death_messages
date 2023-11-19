@@ -2,7 +2,7 @@
 fall = {
     '1 hit the ground too hard',
     '1 jumped off a cliff',
-    '1 thought water canceled fall damage',
+    '1 forgot about fall damage',
     "1 fell and couldn't get back up"
 }
 
@@ -11,7 +11,7 @@ burn = {
     '1 burned to a crisp',
     '1 got a little too warm',
     '1 got too close to the camp fire',
-    '1 forgot to stop, drop, and roll'
+    '1 got nuked'
 }
 
 -- Drowning
@@ -19,7 +19,7 @@ drown = {
     '1 drowned',
     '1 ran out of air',
     '1 tried to impersonate an anchor',
-    "1 forgot they aren't a fish"
+    "1 forgot they weren't a fish"
 }
 
 -- Burning in lava
