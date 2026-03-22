@@ -152,8 +152,8 @@ minetest.register_chatcommand('toggle_death_messages', {
 		minetest.log('action', name .. ' enabled their death messages')
 	    end
 
-	    else
-		minetest.chat_send_player(name, minetest.colorize('red', S('You are missing the toggle_death_messages privilege')))
+	else
+	    minetest.chat_send_player(name, minetest.colorize('red', S('You are missing the toggle_death_messages privilege')))
 	end
     end
 })
