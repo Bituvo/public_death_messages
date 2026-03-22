@@ -149,10 +149,10 @@ minetest.register_chatcommand('toggle_death_messages', {
                 -- Turn death messages on
                 meta:set_string('show_death_messages', 'yes')
                 minetest.chat_send_player(name, minetest.colorize('green', S('You will now send death messages')))
-                minetest.log('action', name .. ' enabled their death messages')
-            end
+		minetest.log('action', name .. ' enabled their death messages')
+	    end
 
-            else
+	    else
 		minetest.chat_send_player(name, minetest.colorize('red', S('You are missing the toggle_death_messages privilege')))
 	end
     end

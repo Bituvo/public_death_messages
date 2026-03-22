@@ -28,4 +28,5 @@
 Toggles death messages appearing in chat when you die=
 You will no longer send death messages=
 You will now send death messages=
+Permits death message toggling=
 You are missing the toggle_death_messages privilege=
