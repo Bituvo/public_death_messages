@@ -122,23 +122,38 @@ minetest.register_on_dieplayer(function(player, reason)
     end
 end)
 
+minetest.register_privilege('toggle_death_messages', {
+    description = S("Permits death message toggling")
+})
+
 minetest.register_chatcommand('toggle_death_messages', {
     description = S('Toggles death messages appearing in chat when you die'),
     func = function(name)
         local meta = minetest.get_player_by_name(name):get_meta()
         local show_death_messages = meta:get_string('show_death_messages')
 
-        if show_death_messages == '' or show_death_messages == 'yes' then
-            -- Turn death messages off
-            meta:set_string('show_death_messages', 'no')
-            minetest.chat_send_player(name, minetest.colorize('green', S('You will no longer send death messages')))
-            minetest.log('action', name .. ' disabled their death messages')
+	-- Checks if the player has the toggle_death_messages privilege,
+	-- and allows or disallows toggling accordingly
+        local has, missing = minetest.check_player_privs(name, {
+		toggle_death_messages = true
+	})
+
+	if has then
+	    if show_death_messages == '' or show_death_messages == 'yes' then
+                -- Turn death messages off
+                meta:set_string('show_death_messages', 'no')
+                minetest.chat_send_player(name, minetest.colorize('green', S('You will no longer send death messages')))
+                minetest.log('action', name .. ' disabled their death messages')
         
-        else
-            -- Turn death messages on
-            meta:set_string('show_death_messages', 'yes')
-            minetest.chat_send_player(name, minetest.colorize('green', S('You will now send death messages')))
-            minetest.log('action', name .. ' enabled their death messages')
-        end
+            else
+                -- Turn death messages on
+                meta:set_string('show_death_messages', 'yes')
+                minetest.chat_send_player(name, minetest.colorize('green', S('You will now send death messages')))
+                minetest.log('action', name .. ' enabled their death messages')
+            end
+
+            else
+		minetest.chat_send_player(name, minetest.colorize('red', S('You are missing the toggle_death_messages privilege')))
+	end
     end
 })
