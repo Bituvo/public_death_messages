@@ -57,11 +57,16 @@ local other = {
     NS('@1 did something fatal')
 }
 
+-- Settings are read from your minetest.conf
+-- TOGGLEABLE_DEATH_MESSAGES determines whether players can toggle their death messages.
+-- If set to false, not only will they be untoggleable, but death messages are always enabled. The default is true
+local TOGGLEABLE_DEATH_MESSAGES = minetest.settings:get_bool("public_death_messages_toggleable", true)
+
 function send_death_message(cause, victim, killer)
     local meta = victim:get_meta()
     local show_death_messages = meta:get_string('show_death_messages')
 
-    if show_death_messages == '' or show_death_messages == 'yes' then
+    if TOGGLEABLE_DEATH_MESSAGES == false or show_death_messages == '' or show_death_messages == 'yes' then
         local death_message = cause[math.random(#cause)]
 
         if killer then
@@ -128,12 +133,15 @@ minetest.register_chatcommand('toggle_death_messages', {
         local meta = minetest.get_player_by_name(name):get_meta()
         local show_death_messages = meta:get_string('show_death_messages')
 
-        if show_death_messages == '' or show_death_messages == 'yes' then
+        if TOGGLEABLE_DEATH_MESSAGES == false then
+            minetest.chat_send_player(name, minetest.colorize('orangered', S('Death messages cannot be disabled on this server')))
+
+        elseif show_death_messages == '' or show_death_messages == 'yes' then
             -- Turn death messages off
             meta:set_string('show_death_messages', 'no')
             minetest.chat_send_player(name, minetest.colorize('green', S('You will no longer send death messages')))
             minetest.log('action', name .. ' disabled their death messages')
-        
+
         else
             -- Turn death messages on
             meta:set_string('show_death_messages', 'yes')
